@@ -33,11 +33,11 @@ fi # fi means reverse of if, indicating condition end
 
 dnf module disable nodejs -y &>> $LOGFILE
 
-VAILDATE $? "Disabling current nodeJS:18" 
+VAILDATE $? "Disabling current nodeJS" 
 
 dnf module enable nodejs:18 -y &>> $LOGFILE
 
-VAILDATE $? "Enabling nodeJS:18" 
+VAILDATE $? "Enabling nodeJS" 
 
 dnf install nodejs -y &>> $LOGFILE
 
