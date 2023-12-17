@@ -31,19 +31,16 @@ else
     echo "you are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf module disable nodejs -y &>> $LOGFILE
+dnf module disable nodejs -y  &>> $LOGFILE
 
-VAILDATE $? "Disabling current nodeJS:18" 
+VAILDATE $? "Disabling current NodeJS" 
 
 dnf module enable nodejs:18 -y &>> $LOGFILE
-
-VAILDATE $? "Enabling nodeJS:18" 
 
 dnf install nodejs -y &>> $LOGFILE
 
 VALIDATE $? "Installing NodeJS:18" 
 
-useradd roboshop
 
 id roboshop
 if [ $? -ne 0 ]
@@ -54,8 +51,6 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-
-VALIDATE $? "Creating roboshop user"
 
 mkdir  -p /app  
 
