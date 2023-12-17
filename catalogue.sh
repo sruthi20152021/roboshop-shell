@@ -16,6 +16,7 @@ VALIDATE(){
     if [ $1 -ne 0 ]
     then
         echo -e "$2 ...$R FAILED $N"
+        exit 1
     else
         echo -e "$2 ...$G SUCCESS $N"
     fi
@@ -30,40 +31,40 @@ else
     echo "you are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOGFILE
 
-VAILDATE $? "Disabling current NodeJS" &>> $LOGFILE
+VAILDATE $? "Disabling current NodeJS" 
 
-dnf module enable nodejs:18 -y
+dnf module enable nodejs:18 -y &>> $LOGFILE
 
-VAILDATE $? "Enabling NodeJS:18" &>> $LOGFILE
+VAILDATE $? "Enabling NodeJS:18" 
 
-dnf install nodejs -y 
+dnf install nodejs -y &>> $LOGFILE
 
-VALIDATE $? "Installing NodeJS:18" &>> $LOGFILE
+VALIDATE $? "Installing NodeJS:18" 
 
-useradd roboshop
+useradd roboshop 
 
-VALIDATE $? "Creating roboshop user" &>> $LOGFILE
+VALIDATE $? "Creating roboshop user"
 
-mkdir /app
+mkdir /app 
 
-VALIDATE $? "Creating app directory" &>> $LOGFILE
+VALIDATE $? "Creating app directory" 
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
 
-VALIDATE $? "Downloading catalogue application" &>> $LOGFILE
+VALIDATE $? "Downloading catalogue application" 
 
 cd /app 
 
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOGFILE
 
-VALIDATE $? "unzipping catalogue" &>> $LOGFILE
+VALIDATE $? "unzipping catalogue" 
 
-npm install 
+npm install &>> $LOGFILE
 
-VAILDATE $? "Installing dependices" &>> $LOGFILE
+VAILDATE $? "Installing dependices" 
 
 # use absolute, because catalogue.service exists there
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
@@ -72,7 +73,7 @@ VALIDATE $? "Copying catalogue service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VAILDATE $? "Catalogue daemon reload" &>> $LOGFILE
+VAILDATE $? "Catalogue daemon reload" 
 
 systemctl enable catalogue &>> $LOGFILE
 
@@ -86,11 +87,11 @@ cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
 
 VALIDATE $? "copying mongodb repo"
 
-dnf install mongodb-org-shell -y
+dnf install mongodb-org-shell -y &>> $LOGFILE
 
 VALIDATE $? "Installing MongoDB client"
 
-mongo --host $MONGODB_HOST </app/schema/catalogue.js
+mongo --host $MONGODB_HOST </app/schema/catalogue.js &>> $LOGFILE
 
 VALIDATE $? "Loading catalogue data into MongoDB"
 
