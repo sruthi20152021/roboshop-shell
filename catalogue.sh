@@ -68,8 +68,6 @@ VALIDATE $? "unzipping catalogue"
 
 npm install &>> $LOGFILE
 
-VAILDATE $? "Installing dependices" 
-
 # use absolute, because catalogue.service exists there
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
 
@@ -77,9 +75,7 @@ VALIDATE $? "Copying catalogue service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VAILDATE $? "Catalogue daemon reload" 
-
-systemctl enable catalogue &>> $LOGFILE
+ systemctl enable catalogue &>> $LOGFILE
 
 VALIDATE $? "Enable catalogue"
 
