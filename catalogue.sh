@@ -9,7 +9,6 @@ MONGODB_HOST=mongodb.hanvika.online
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
-
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
@@ -32,9 +31,12 @@ else
 fi # fi means reverse of if, indicating condition end
 
 dnf module disable nodejs -y  &>> $LOGFILE
- 
 
+VAILDATE $? "Disabling current Nodejs"
+ 
 dnf module enable nodejs:18 -y &>> $LOGFILE
+
+VALIDATE $? "Enabling NodesJS:18"
 
 dnf install nodejs -y &>> $LOGFILE
 
@@ -50,23 +52,23 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-
 mkdir  -p /app  
 
 VALIDATE $? "Creating app directory" 
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
 
 VALIDATE $? "Downloading catalogue application" 
 
 cd /app  
-
 
 unzip -o /tmp/catalogue.zip &>> $LOGFILE
 
 VALIDATE $? "unzipping catalogue" 
 
 npm install &>> $LOGFILE
+
+VAILDATE $? "Installing dependencies"
 
 # use absolute, because catalogue.service exists there
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
@@ -75,9 +77,11 @@ VALIDATE $? "Copying catalogue service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
- systemctl enable catalogue &>> $LOGFILE
+VALIDATE $? "catalogue daemon reload"
 
-VALIDATE $? "Enable catalogue"
+systemctl enable catalogue &>> $LOGFILE
+
+VAILDATE $? "Enable catalogue"
 
 systemctl start catalogue &>> $LOGFILE
 
