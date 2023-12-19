@@ -67,7 +67,7 @@ VALIDATE $? "unzipping catalogue"
 npm install &>> $LOGFILE
 
 # use absolute, because catalogue.service exists there
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service 
 
 VALIDATE $? "Copying catalogue service file"
 
