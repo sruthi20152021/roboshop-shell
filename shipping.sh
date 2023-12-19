@@ -30,7 +30,7 @@ else
     echo "you are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf install maven -y
+dnf install maven -y &>> $LOGFILE
 
 id roboshop # if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
@@ -45,7 +45,7 @@ mkdir  -p /app
 
 VALIDATE $? "Creating app directory"
 
-curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip
+curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
 
 VAILDATE $? "Downloading shipping"
 
@@ -53,43 +53,43 @@ cd /app
 
 VAILDATE $? "moving to app directory"
 
-unzip  -o /tmp/shipping.zip
+unzip  -o /tmp/shipping.zip &>> $LOGFILE
 
 VAILDATE $? "unzipping shipping"
 
-mvn clean package
+mvn clean package &>> $LOGFILE
 
 VAILDATE $? "Installing dependencies"
 
-mv target/shipping-1.0.jar shipping.jar
+mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
 
 VAILDATE $? "renaming jar file"
 
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
 
 VAILDATE $? "copying shipping service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOGFILE
 
 VAILDATE $? "daemon reload"
 
-systemctl enable shipping 
+systemctl enable shipping &>> $LOGFILE
 
 VAILDATE $? "enable shipping"
 
-systemctl start shipping
+systemctl start shipping &>> $LOGFILE
 
 Validate $? "start shipping"
 
-dnf install mysql -y
+dnf install mysql -y &>> $LOGFILE
 
 VAILDATE $? "Installing MYSQL client"
 
-mysql -h mysql.hanvika.online -uroot -pRoboShop@1 < /app/schema/shipping.sql 
+mysql -h mysql.hanvika.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
 
 VAILDATE $? "loading shipping data"
 
-systemctl restart shipping
+systemctl restart shipping &>> $LOGFILE
 
 VAILDATE $? "restart shipping"
 
