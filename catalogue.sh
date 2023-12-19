@@ -32,8 +32,7 @@ fi # fi means reverse of if, indicating condition end
 
 dnf module disable nodejs -y  &>> $LOGFILE
 
-VAILDATE $? "Disable current Nodejs"
- 
+
 dnf module enable nodejs:18 -y &>> $LOGFILE
 
 VALIDATE $? "Enabling NodesJS:18"
@@ -66,8 +65,6 @@ unzip -o /tmp/catalogue.zip &>> $LOGFILE
 VALIDATE $? "unzipping catalogue" 
 
 npm install &>> $LOGFILE
-
-VAILDATE $? "Installing dependencies"
 
 # use absolute, because catalogue.service exists there
 cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
