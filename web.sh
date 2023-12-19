@@ -30,27 +30,41 @@ else
     echo "you are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf install nginx -y
+dnf install nginx -y &>> $LOGFILE
 
 VALIDATE $? "Installing Nginx"
 
-systemctl enable nginx
+systemctl enable nginx &>> $LOGFILE
 
 VAILDATE $? "Enabling Nginx"
 
-systemctl start nginx
+systemctl start nginx &>> $LOGFILE
 
 VAILDATE $? "Starting Nginx"
 
-rm -rf /usr/share/nginx/html/*
+rm -rf /usr/share/nginx/html/* &>> $LOGFILE
 
-curl -o /tmp/web.zip https://roboshop-builds.s3.amazonaws.com/web.zip
+VAILDATE $? "removed default website"
 
-cd /usr/share/nginx/html
+curl -o /tmp/web.zip https://roboshop-builds.s3.amazonaws.com/web.zip &>> $LOGFILE
 
-unzip /tmp/web.zip
+VAILDATE $? "Downloaded web application"
 
-cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cd /usr/share/nginx/html &>> $LOGFILE
+
+VAILDATE $? "moving nginx html directory"
+
+unzip -o /tmp/web.zip &>> $LOGFILE
+
+VAILDATE $? "unzipping web"
+
+cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf &>> $LOGFILE
+
+VAILDATE $? "copied roboshop reverse proxy config"
+
+systemctl restart nginx &>> $LOGFILE
+
+VAILDATE $? "restarted nginx"
 
 
 
