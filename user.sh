@@ -42,7 +42,7 @@ dnf install nodejs -y &>> $LOGFILE
 
 VALIDATE $? "Installing NodeJS:18" 
 
-id roboshop
+id roboshop # if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
 then
     useradd roboshop
@@ -91,8 +91,4 @@ VALIDATE $? "copying mongodb repo"
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
 
-VALIDATE $? "Installing MongoDB client"
 
-mongo --host $MONGODB_HOST </app/schema/user.js &>> $LOGFILE
-
-VALIDATE $? "Loading user data into MongoDB"

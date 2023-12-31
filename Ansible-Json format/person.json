@@ -1,0 +1,28 @@
+{
+   "name": "sruthi",
+   "dob": "30-09-2021",
+   "address": { 
+        "address-line1": "vivek street",
+        "address-line2": "tirumal nagar",
+        "city": "Hyderabad"
+   }
+}
+
+{
+    "name": "sruthi",
+    "dob": "30-09-2021",
+    "address": [
+       { 
+           "address-line1": "vivek street",
+           "address-line2": "tirumal nagar",
+           "city": "Hyderabad",
+           "type": "home"
+       },
+       { 
+           "address-line1": "vivek street",
+           "address-line2": "tirumal nagar",
+           "city": "Hyderabad",
+           "type": "office"
+       }
+    ] 
+}

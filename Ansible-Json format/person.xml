@@ -1,0 +1,29 @@
+<Person>
+    <name>Sruthi</name>
+    <Dob>30-09-2021</Dob>
+    <Adress>
+        <adress-line1>Tirumal street</adress-line1>   
+        <adress-line2>Tirumal Nagar</adress-line2>
+        <street>4th street</street>
+        <city>Hyderabad</city>
+    </Adress>
+</Person>
+
+<Person>
+    <name>Sruthi</name>
+    <Dob>30-09-2021</Dob>
+    <Adress>
+        <HomeAdress>    
+            <adress-line1>Tirumal street</adress-line1>   
+            <adress-line2>Tirumal Nagar</adress-line2>
+            <street>4th street</street>
+            <city>Hyderabad</city>
+        </HomeAdress>
+        <OfficeAdress>    
+            <adress-line1>Tirumal street</adress-line1>   
+            <adress-line2>Tirumal Nagar</adress-line2>
+            <street>4th street</street>
+            <city>Hyderabad</city>
+        </OfficeAdress>
+    </Adress>
+</Person>
